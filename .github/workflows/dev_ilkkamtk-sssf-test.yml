@@ -26,8 +26,10 @@ jobs:
           DATABASE_URL: ${{ secrets.DATABASE_URL}}
         run: |
           npm install
+          npm run build --if-present
           npm run test --if-present
-          rm -rf node_modules
+          rm -rf src
+          rm -rf test
 
       - name: Upload artifact for deployment job
         uses: actions/upload-artifact@v2
@@ -56,8 +58,3 @@ jobs:
           slot-name: 'Production'
           publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_D2917D84A5F34871A3704578F46F267D }}
           package: .
-
-      - name: build and run
-        run: |
-          npm install
-          npm run build
